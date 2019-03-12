@@ -11,6 +11,7 @@ namespace Client
 {
     class Program
     {
+        [STAThread]
         static void Main(string[] args)
         {
             ConnectToInterchangeService conServ = new ConnectToInterchangeService();
@@ -23,6 +24,9 @@ namespace Client
                 Console.WriteLine("4. GetFilteredByNode");
                 Console.WriteLine("5. GetFilteredByIDAndNode");
                 Console.WriteLine("6. GetFilteredByNodeValue");
+                Console.WriteLine("7. Spara Resultat");
+                Console.WriteLine("8. Avsluta");
+
                 Console.WriteLine("vad vill du göra?");
                 i = Int32.Parse(Console.ReadLine());
                 switch(i)
@@ -62,8 +66,30 @@ namespace Client
                         conServ.GetFilteredByNodeValue(node2, nodeValue);
                         Console.WriteLine(conServ.Result);
                         break;
-                    case 0:
+                    case 7:
+                        FileBackup.SaveToFile(conServ.Result.ToString());
+                        Console.WriteLine("Resultat sparat");
                         break;
+                    case 8:
+                        Console.WriteLine("Har du sparat ditt resultat?" + "\n" + "1. Spara och avsluta" + "\n" + "2. Avsluta");
+                        string svar = Console.ReadLine();
+
+                        if (svar == "1")
+                        {
+                            FileBackup.SaveToFile(conServ.Result.ToString());
+                            Console.WriteLine("Sparar och avslutar");
+                            i = 0;
+                        }
+                        else if (svar == "2")
+                        {
+                            Console.WriteLine("Avslutar utan att spara");
+                            i = 0;
+                        }
+                        else
+                        {
+                        }
+                        break;
+      
                 }
 
             }
