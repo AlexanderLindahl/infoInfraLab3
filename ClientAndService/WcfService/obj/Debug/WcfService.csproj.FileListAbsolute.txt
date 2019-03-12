@@ -1,0 +1,2 @@
+D:\Skola\InfoInfra\Laboration 3_System-till-system tjanster\ClientAndService\WcfService\obj\Debug\WcfService.csprojAssemblyReference.cache
+D:\Skola\InfoInfra\Laboration 3_System-till-system tjanster\ClientAndService\WcfService\obj\Debug\WcfService.csproj.CoreCompileInputs.cache

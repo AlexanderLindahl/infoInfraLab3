@@ -1,0 +1,2 @@
+D:\Skola\InfoInfra\Laboration 3_System-till-system tjanster\ClientAndService\ClientAndService\obj\Debug\Client.csprojAssemblyReference.cache
+D:\Skola\InfoInfra\Laboration 3_System-till-system tjanster\ClientAndService\ClientAndService\obj\Debug\Client.csproj.CoreCompileInputs.cache

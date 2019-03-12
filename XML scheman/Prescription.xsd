@@ -1,0 +1,1014 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 sp1 (http://www.altova.com) by Sten-Erik Öhlund (WM-Data) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<!-- **************************************************************************   -->
+	<!-- Specifikation för XML-recept.                                               -->
+	<!--                                                                              -->
+	<!-- Version: 2.1                                                                 -->
+	<!-- **************************************************************************   -->
+	<!-- Include Types                                                                -->
+	<xs:include schemaLocation="Types.xsd"/>
+	<!-- Include MessageRoutingAddress                                                -->
+	<xs:include schemaLocation="Header.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Specifikation för XML-recept</xs:documentation>
+	</xs:annotation>
+	<xs:element name="Interchange">
+		<xs:annotation>
+			<xs:documentation>Interchange (Rootelement) - Utväxlingsmeddelande</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="MessageRoutingAddress" type="MessageRoutingAddress">
+					<xs:annotation>
+						<xs:documentation>Meddelandehuvud, transportinformation</xs:documentation>
+						<xs:documentation>Se specifikation för MessageRoutingAddress. Tillämpningar se 1.1 MessageRoutingAddress Transportinformation (tillämpning)</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="NewPrescriptionMessage" type="NewPrescriptionMessage">
+					<xs:annotation>
+						<xs:documentation>Receptmeddelande</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="NewPrescriptionMessage">
+		<xs:annotation>
+			<xs:documentation>Receptmeddelande</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PrescriptionMessage" type="PrescriptionMessage">
+				<xs:annotation>
+					<xs:documentation>Information om receptmeddelande</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SubjectOfCare" type="SubjectOfCare">
+				<xs:annotation>
+					<xs:documentation>Patient (Person eller Djur)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PrescriptionSet" type="PrescriptionSet">
+				<xs:annotation>
+					<xs:documentation>Recept eller receptsamling.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PrescriptionMessage">
+		<xs:annotation>
+			<xs:documentation>Information om receptmeddelande</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="GeneralPrescriptionMessageInformation" type="GeneralPrescriptionMessageInformation">
+				<xs:annotation>
+					<xs:documentation>Allmän information om meddelandet</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FunctionOfMessage" type="FunctionOfMessage">
+				<xs:annotation>
+					<xs:documentation>Meddelandetyp</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MessageSender" type="MessageSender">
+				<xs:annotation>
+					<xs:documentation>Meddelandets sändare</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DesignatedMessageReceiver" type="DesignatedMessageReceiver">
+				<xs:annotation>
+					<xs:documentation>Meddelandets mottagare</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Prescriber" type="Prescriber">
+				<xs:annotation>
+					<xs:documentation>Förskrivare</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GeneralPrescriptionMessageInformation">
+		<xs:annotation>
+			<xs:documentation>Allmän information om meddelandet</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="IdOfMessageByOriginator" type="IdOfMessageByOriginator">
+				<xs:annotation>
+					<xs:documentation>Avsändarens identitet</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="UrgencyOfMessage" type="UrgencyOfMessage" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Brådskandegrad för meddelandet</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MessageReceiptAcknowledgementRequest" type="MessageReceiptAcknowledgementRequest">
+				<xs:annotation>
+					<xs:documentation>Önskemål om kvittens på meddelandet</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="IdOfMessageByOriginator">
+		<xs:annotation>
+			<xs:documentation>Avsändarens identitet</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="IdOfMessageBySender" type="IdOfMessageBySenderType">
+				<xs:annotation>
+					<xs:documentation>Sändarens unika identifikation på meddelandet</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IssueDateAndTimeOfMessage" type="IssueDateAndTimeOfMessage">
+				<xs:annotation>
+					<xs:documentation>Tidpunkt för skapande av meddelande.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MessageSender">
+		<xs:annotation>
+			<xs:documentation>Meddelandets sändare</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="HealthcareAgentInContextId">
+				<xs:annotation>
+					<xs:documentation>Roll för sjukvårdsaktör</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Value">
+							<xs:annotation>
+								<xs:documentation>Roll. Identifiera att det är sändare av meddelandet</xs:documentation>
+								<xs:documentation>SND = Sender</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="Role">
+									<xs:enumeration value="SND"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="HealthcareAgent">
+				<xs:annotation>
+					<xs:documentation>Sjukvårdsaktör Person/organisation som sänder meddelandet</xs:documentation>
+					<xs:documentation>Måste vara samma som förskriver.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="HealthcareAgentId" type="HealthcareAgentIdType" maxOccurs="2">
+							<xs:annotation>
+								<xs:documentation>Identifikation för sjukvårdsaktör</xs:documentation>
+								<xs:documentation>Vårdande enhet med arbetsplatskod endast obligatoriskt vid förskrivning av läkemedel med förmån. Saknas arbetsplatskod gäller ej läkemedelsförmån.</xs:documentation>
+								<xs:documentation>Första IdScheme måste vara VEN=Vårdande enhet.</xs:documentation>
+								<xs:documentation>Andra IdScheme måste vara UTF=Utfärdarkod. Sändande person måste vara samma som förskrivare. Giltig förskrivarkod alltid obligatorisk vid elektronisk förskrivning.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="HealthcareParty" type="HealthcareParty">
+							<xs:annotation>
+								<xs:documentation>Sjukvårdspart</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DesignatedMessageReceiver">
+		<xs:annotation>
+			<xs:documentation>Meddelandets mottagare</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="HealthcareAgentInContextId">
+				<xs:annotation>
+					<xs:documentation>Roll för sjukvårdsaktör</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Value">
+							<xs:annotation>
+								<xs:documentation>Roll</xs:documentation>
+								<xs:documentation>RCV = Receiver</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="Role">
+									<xs:enumeration value="RCV"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="HealthcareAgent">
+				<xs:annotation>
+					<xs:documentation>Sjukvårdsaktör. Organisation som mottager meddelandet</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="HealthcareAgentId">
+							<xs:annotation>
+								<xs:documentation>Identifikation för sjukvårdsaktör Identifierar organisation som mottager meddelandet</xs:documentation>
+								<xs:documentation>Används endast en gång i DesignatedMessageReciever.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="IdScheme">
+										<xs:annotation>
+											<xs:documentation>Kodtyp. Kodtyp skall alltid finnas då kodvärde finns.</xs:documentation>
+											<xs:documentation>EAN = EAN-kod</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="IdScheme">
+												<xs:enumeration value="EAN"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element name="Value" type="EANValue">
+										<xs:annotation>
+											<xs:documentation>Kodvärde mottagande apotek</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Prescriber">
+		<xs:annotation>
+			<xs:documentation>Förskrivare</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="HealthcareAgentInContextId">
+				<xs:annotation>
+					<xs:documentation>Roll för sjukvårdsaktör</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Value">
+							<xs:annotation>
+								<xs:documentation>Roll.  Identifierar att det är förskrivaren</xs:documentation>
+								<xs:documentation>PRESCRIBER = Förskrivare</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="Role">
+									<xs:enumeration value="PRESCRIBER"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="HealthcareAgent">
+				<xs:annotation>
+					<xs:documentation>Sjukvårdsaktör. Person som utfärdat receptet</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="HealthcareAgentId" type="HealthcareAgentIdType" maxOccurs="2">
+							<xs:annotation>
+								<xs:documentation>Identifikation för sjukvårdsaktör Identifierar person/enhet som utfärdat receptet</xs:documentation>
+								<xs:documentation>Vårdande enhet med arbetsplatskod endast obligatoriskt vid förskrivning av läkemedel med förmån.</xs:documentation>
+								<xs:documentation>Första IdScheme måste vara VEN=Vårdande enhet.</xs:documentation>
+								<xs:documentation>Andra IdScheme måste vara UTF=Utfärdarkod. Sändande person måste vara samma som förskrivare. Giltig förskrivarkod alltid obligatorisk vid elektronisk förskrivning.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="HealthcareParty" type="HealthcareParty">
+							<xs:annotation>
+								<xs:documentation>Sjukvårdspart</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HealthcareParty">
+		<xs:annotation>
+			<xs:documentation>Sjukvårdspart</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="HealthcarePerson" type="HealthcarePerson">
+				<xs:annotation>
+					<xs:documentation>Sjukvårdsperson</xs:documentation>
+					<xs:documentation>Identitet för sändande sjukvårdsaktör</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Address" type="HealthcarePartyAddress">
+				<xs:annotation>
+					<xs:documentation>Adressinformation</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Telecommunication" type="Telecommunication">
+				<xs:annotation>
+					<xs:documentation>Telefonnummer</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HealthcarePerson">
+		<xs:annotation>
+			<xs:documentation>Sjukvårdsperson</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Name" type="Name">
+				<xs:annotation>
+					<xs:documentation>Namn, Efternamn Förnamn</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Qualification" type="Qualification">
+				<xs:annotation>
+					<xs:documentation>Förskrivartyp alt Yrkeskvalifikation. Kodad form</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HealthcarePartyAddress">
+		<xs:annotation>
+			<xs:documentation>Adressinformation. Adress obligatoriskt för förskrivare. Se nedan vilka fält som är obligatoriska.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PostalCode" type="PostalCode">
+				<xs:annotation>
+					<xs:documentation>Postnummer</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StructuredAddress" type="HealthcarePartyStructuredAddress">
+				<xs:annotation>
+					<xs:documentation>Adress i strukturerad form</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HealthcarePartyStructuredAddress">
+		<xs:annotation>
+			<xs:documentation>Adress i strukturerad form</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="NumberOrNameOfHouse" type="NumberOrNameOfHouse" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Lokalitet</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StreetName" type="StreetName">
+				<xs:annotation>
+					<xs:documentation>Gatuadress</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="City" type="City">
+				<xs:annotation>
+					<xs:documentation>Ort</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SubjectOfCare">
+		<xs:annotation>
+			<xs:documentation>Patient (person/djur)</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TypeOfSubjectOfCare" type="TypeOfSubjectOfCare">
+				<xs:annotation>
+					<xs:documentation>Patienttyp</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice>
+				<xs:element name="PatientMatchingInfo" type="PatientMatchingInfo">
+					<xs:annotation>
+						<xs:documentation>Patientinformation</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="AnimalMatchingInfo" type="AnimalMatchingInfo">
+					<xs:annotation>
+						<xs:documentation>Information om Djur</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PatientMatchingInfo">
+		<xs:annotation>
+			<xs:documentation>Patientinformation</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PersonNameDetails" type="PersonNameDetails">
+				<xs:annotation>
+					<xs:documentation>Namndetaljer</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PatientId" type="PatientId">
+				<xs:annotation>
+					<xs:documentation>Patientid</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Address" type="PatientAddress" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Adressinformation</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Telecommunication" type="Telecommunication" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Telefonnummer inkl riktnummer</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Sex" type="Sex" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Kön</xs:documentation>
+					<xs:documentation>1=man</xs:documentation>
+					<xs:documentation>2=kvinna</xs:documentation>
+					<xs:documentation>3=ej specificerat</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PersonNameDetails">
+		<xs:annotation>
+			<xs:documentation>Namndetaljer</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="StructuredPersonName" type="StructuredPersonName">
+				<xs:annotation>
+					<xs:documentation>Strukturerat personnamn. Efternamn och förnamn obligatoriskt på patient</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StructuredPersonName">
+		<xs:annotation>
+			<xs:documentation>Strukturerat personnamn.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="FamilyName" type="FamilyName">
+				<xs:annotation>
+					<xs:documentation>Efternamn</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FirstGivenName" type="FirstGivenName">
+				<xs:annotation>
+					<xs:documentation>Förnamn</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PatientId">
+		<xs:annotation>
+			<xs:documentation>Patientid. Någon form av patientidentifikation är obligatorisk.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="IdScheme">
+				<xs:annotation>
+					<xs:documentation>Kodtyp</xs:documentation>
+					<xs:documentation>PNR = personnummer</xs:documentation>
+					<xs:documentation>FDA = Födelsedatum (utan löp- och kontrollsiffra)</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="IdScheme">
+						<xs:enumeration value="PNR"/>
+						<xs:enumeration value="FDA"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="IdValue">
+				<xs:annotation>
+					<xs:documentation>Idnummer. Kundens (patientens) identifikationsnummer inkl sekelsiffror</xs:documentation>
+					<xs:documentation>PNR: ccyymmddpppp, FDA: ccyymmdd. FDA med sekelskiftesnummer utan löp- och kontrollnummer.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:pattern value="[1-9][0-9][0-9][0-9][0-1][0-9][0-3][0-9]([0-9][0-9][0-9][0-9])?"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PatientAddress">
+		<xs:annotation>
+			<xs:documentation>Adressinformation</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PostalCode" type="PostalCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Postnummer</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StructuredAddress" type="PatientStructuredAddress">
+				<xs:annotation>
+					<xs:documentation>Strukturerad adress</xs:documentation>
+					<xs:documentation>I denna implementation används endast strukturerad adress.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PatientStructuredAddress">
+		<xs:annotation>
+			<xs:documentation>Strukturerad adress</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="StreetName" type="StreetName">
+				<xs:annotation>
+					<xs:documentation>Gatuadress. Ex Lillgatan 9</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="City" type="City">
+				<xs:annotation>
+					<xs:documentation>Ort</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AnimalMatchingInfo">
+		<xs:annotation>
+			<xs:documentation>Information om Djur</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AnimalCarer" type="AnimalCarer">
+				<xs:annotation>
+					<xs:documentation>Djurägare</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AnimalCarer">
+		<xs:annotation>
+			<xs:documentation>Djurägare</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ContactPersonName" type="ContactPersonName">
+				<xs:annotation>
+					<xs:documentation>Namn: Förnamn Efternamn</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ContactPersonAddress" type="ContactPersonAddress">
+				<xs:annotation>
+					<xs:documentation>Adress för kontaktperson</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ContactPersonId" type="ContactPersonId" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Kontaktpersonid</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TelecommunicationNumber" type="TelecommunicationNumber" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Telefonnummer till djurskötaren</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ContactPersonAddress">
+		<xs:annotation>
+			<xs:documentation>Adress för kontaktperson</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PostalCode" type="PostalCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Postnummer</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StructuredAddress" type="ContactPersonStructuredAddress" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Strukturerad address</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ContactPersonStructuredAddress">
+		<xs:annotation>
+			<xs:documentation>Strukturerad address</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="StreetName" type="StreetName" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Gatuadress. Ex Mellangatan 9</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="City" type="City" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Ort</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ContactPersonId">
+		<xs:annotation>
+			<xs:documentation>Kontaktpersonid</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="IdScheme">
+				<xs:annotation>
+					<xs:documentation>Kodtyp. Vid särskilda läkemedel måste personummer finnas.</xs:documentation>
+					<xs:documentation>PNR = personnummer</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="IdScheme">
+						<xs:enumeration value="PNR"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="IdValue">
+				<xs:annotation>
+					<xs:documentation>Idnummer. Djurägarens personnummer inkl sekelsiffror (ccyymmddpppp)</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:pattern value="[1-9][0-9][0-9][0-9][0-1][0-9][0-3][0-9][0-9][0-9][0-9][0-9]"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PrescriptionSet">
+		<xs:annotation>
+			<xs:documentation>Recept</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PrescriptionSetId" type="PrescriptionSetIdType">
+				<xs:annotation>
+					<xs:documentation>Receptid. Idtyp anges i attributet idtype.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PrescriptionSetIssueTime" type="PrescriptionSetIssueTime">
+				<xs:annotation>
+					<xs:documentation>Tidpunkt för utfärdade.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PrescribersComment" type="PrescribersComment" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Förskrivarens kommentar</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PrescriptionItemDetails" type="PrescriptionItemDetails" maxOccurs="99">
+				<xs:annotation>
+					<xs:documentation>Recipeinformation</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PaymentDetails" type="PaymentDetails" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Finansiella detaljer för hela receptet</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DeliveryLocation" type="DeliveryLocation" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Leveransinformation. Om receptet skickas till ombudsapotek, dvs. mottagaren är ett ombudsapotek (EAN-kod) är leveransinformation obligatorisk.</xs:documentation>
+					<xs:documentation> OBS! behöver tydliggöras med en definition av vilka apotek som är ombudsapotek</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PrescriptionItemDetails">
+		<xs:annotation>
+			<xs:documentation>Recipeinformation</xs:documentation>
+			<xs:documentation>Ett recipe är normalt en förpackning, dvs. en reciperad. </xs:documentation>
+			<xs:documentation>Ett recipe kan begreppsmässigt även innehålla flera förpackningar (flera reciperader) av samma vara.</xs:documentation>
+			<xs:documentation>I detta fall knyts ett recipe (ett aggregerat recipe) ihop av flera recipeinformationsrader med ett gemensamt första löpnummer på RecipeRadId.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PrescriptionItemId" type="PrescriptionItemId">
+				<xs:annotation>
+					<xs:documentation>RecipeRadId</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LatestRequestedTimeForDispensing" type="LatestRequestedTimeForDispensing" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Datum inom vilken första uttag av läkemedel måste göras</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PrescriptionItemAuthTime" type="PrescriptionItemAuthTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Datum för sista giltighetsdag för recept. Ett absolut datum. Idag gäller alltid 1 år. Förkortat giltighetstid gäller alltid enbart för första uttag.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IndicationForPrescription" type="IndicationForPrescription" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Förskrivningsorsak Enligt specifikation av Socialstyrelsen</xs:documentation>
+					<xs:documentation>Används ej fn. Ej fastställt.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SubstitutionType" type="SubstitutionType" minOccurs="0" maxOccurs="2">
+				<xs:annotation>
+					<xs:documentation>Typ av utbyte.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PaymentDetails" type="PaymentDetailsItem">
+				<xs:annotation>
+					<xs:documentation>Finansiella detaljer för enskild reciperad</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PrescribedMedicinalProduct" type="PrescribedMedicinalProduct">
+				<xs:annotation>
+					<xs:documentation>Förskriven medicinsk produkt</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaymentDetailsItem">
+		<xs:annotation>
+			<xs:documentation>Finansiella detaljer för enskild reciperad</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ServiceAgreementType" type="ServiceAgreementType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Identifiering av finansieringsavtal</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PaymentConditions" type="PaymentConditions">
+				<xs:annotation>
+					<xs:documentation>Betalningsvillkor. Rättning i överensstämmelse med receptföreskrifter om aktivt val av förmånstyp. Avvikelse från SIS XML.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaymentConditions">
+		<xs:annotation>
+			<xs:documentation>Betalningsvillkor.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CareCoverageType" type="CareCoverageType">
+				<xs:annotation>
+					<xs:documentation>Förmånstyp</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PrescribedMedicinalProduct">
+		<xs:annotation>
+			<xs:documentation>Förskriven medicinsk produkt</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="MedicinalProduct" type="MedicinalProduct">
+				<xs:annotation>
+					<xs:documentation>Medicinsk produkt</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="InstructionsForUse" type="InstructionsForUse" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Instruktioner för användning. Obligatoriskt vid läkemedel.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RepeatDispensingInstructions" type="RepeatDispensingInstructions">
+				<xs:annotation>
+					<xs:documentation>Instruktioner för upprepad expediering</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MedicinalProduct">
+		<xs:annotation>
+			<xs:documentation>Medicinsk produkt</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Status" type="Status">
+				<xs:annotation>
+					<xs:documentation>Status</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ProductType" type="ProductType">
+				<xs:annotation>
+					<xs:documentation>Produkttyp</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ManufacturedProductId" type="ManufacturedProductId" maxOccurs="2">
+				<xs:annotation>
+					<xs:documentation>Produktinformation</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Package" type="Package">
+				<xs:annotation>
+					<xs:documentation>Förpackning. Obligatoriskt vid status = 1 och vid Typ av ID = NVN, samt vid användning av NPL-idn så länge man inte kan förskriva på läkemedelsnivå.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ManufacturedProductId">
+		<xs:annotation>
+			<xs:documentation>Produktinformation. Endast företagstillverkade läkemedel tillåts att förskrivas i e-recept tills vidare. Vid Status = 1 är denna klass obligatorisk</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ProductId" type="ProductId">
+				<xs:annotation>
+					<xs:documentation>Produktnummer. Produktnummer är obligatorisk vid status = 1 vilket alltid är fallet.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IdType">
+				<xs:annotation>
+					<xs:documentation>Typ av ID. Obligatoriskt då produktnummer finns.</xs:documentation>
+					<xs:documentation>NVN= Nordiskt varunummer.</xs:documentation>
+					<xs:documentation>NPLID = NPL Id som är id för läkemedel på produktnivå.</xs:documentation>
+					<xs:documentation>NPLPACK = NPL pack id som är id på förpackningsnivå (motsvarande nivå som varunummer, NVN)</xs:documentation>
+					<xs:documentation>NVN motsvarar varunummer i ACA. NPLId:n är 14 tkn långa och inleds med datum yymmdd och ett löpnummer som börjar med 0 för NPL-id och 1 för NPL-packid.</xs:documentation>
+					<xs:documentation>Används NPL-idn skall Både NPL-id och NPL-packid användas. Används NVN skall endast det användas. Förekomst av ManufacturedProductId ändras till 1..2</xs:documentation>
+					<xs:documentation>, dvs antingen används NPL-idn (2st) eller endast NVN (1 st). Något stöd för expediering av recept med NPL-id saknas dock. Införande överenskommes med Apoteket när det blir aktuellt.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="IdType">
+						<xs:enumeration value="NVN"/>
+						<xs:enumeration value="NPLID"/>
+						<xs:enumeration value="NPLPACK"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Package">
+		<xs:annotation>
+			<xs:documentation>Förpackning</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="NumberOfPackages" type="NumberOfPackages">
+				<xs:annotation>
+					<xs:documentation>Antal förpackningar</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InstructionsForUse">
+		<xs:annotation>
+			<xs:documentation>Instruktion fär användning</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="UnstructuredInstructionsForUse" type="UnstructuredInstructionsForUse">
+				<xs:annotation>
+					<xs:documentation>Ostrukturerad instruktion för användning</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LanguageOfLabel" type="LanguageOfLabel" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Främmande språktyp. Främmande språk för anvisningar i kodad form enligt ISO 639-1 </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="UnstructuredInstructionsForUse">
+		<xs:annotation>
+			<xs:documentation>Ostrukturerad instruktion för användning</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TypeOfInstruction" type="TypeOfInstruction">
+				<xs:annotation>
+					<xs:documentation>Typ av instruktion. Typ av instruktion är obligatorisk.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="UnstructuredDosageAdmin" type="UnstructuredDosageAdmin">
+				<xs:annotation>
+					<xs:documentation>Instruktion till patienten. Instruktion till patienten är obligatorisk vid förskrivning av läkemedel.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RepeatDispensingInstructions">
+		<xs:annotation>
+			<xs:documentation>Instruktioner för upprepad expediering</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DispensingRepeatNumber" type="DispensingRepeatNumber">
+				<xs:annotation>
+					<xs:documentation>Antal uttag. Antalet gånger som receptet kan expedieras</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TimeInterval" type="TimeInterval" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Tid mellan uttag. Tidsintervall mellan expedieringstillfällena. Absolut expeditionsintervall.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TimeInterval">
+		<xs:annotation>
+			<xs:documentation>Tid mellan uttag.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TimeValue" type="TimeValue">
+				<xs:annotation>
+					<xs:documentation>Tidsvärde. Obligatoriskt fält ifall tid mellan uttag finns med som klass.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TimeUnit" type="TimeUnit">
+				<xs:annotation>
+					<xs:documentation>Tidsenhet. Obligatoriskt fält ifall tid mellan uttag finns med som klass.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaymentDetails">
+		<xs:annotation>
+			<xs:documentation>Finansiella detaljer för hela receptet</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Fee" type="Fee">
+				<xs:annotation>
+					<xs:documentation>Betalningsanspråk</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Fee">
+		<xs:annotation>
+			<xs:documentation>Betalningsanspråk</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="FeeType" type="FeeType">
+				<xs:annotation>
+					<xs:documentation>Typ av betalningsanspråk</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PaymentAccount" type="PaymentAccount">
+				<xs:annotation>
+					<xs:documentation>Konto</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Amount" type="Amount">
+				<xs:annotation>
+					<xs:documentation>Belopp</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaymentAccount">
+		<xs:annotation>
+			<xs:documentation>Konto</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="IdType">
+				<xs:annotation>
+					<xs:documentation>Typ av konto</xs:documentation>
+					<xs:documentation>Varning: För närvarande kan Apoteket endast ta hand om postgirokonton. BGI planeras att införas 2006. Kontakta apoteket vid planerad användning av BGI.</xs:documentation>
+					<xs:documentation>PGI=Postgiro</xs:documentation>
+					<xs:documentation>BGI=Bankgiro</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="IdType">
+						<xs:enumeration value="PGI"/>
+						<xs:enumeration value="BGI"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="IdValue" type="IdValue">
+				<xs:annotation>
+					<xs:documentation>Kontonummer</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Amount">
+		<xs:annotation>
+			<xs:documentation>Belopp</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Value" type="AmountValue">
+				<xs:annotation>
+					<xs:documentation>Värde. Endast hela kronor.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Unit" type="Unit">
+				<xs:annotation>
+					<xs:documentation>Enhet, Betalningsvaluta. ATS ignorerar enhet, förutsätter SEK.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DeliveryLocation">
+		<xs:annotation>
+			<xs:documentation>Leveransinformation</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DeliveryMethod" type="DeliveryMethod">
+				<xs:annotation>
+					<xs:documentation>Leveranssätt. Adress avser slutadress för leverans, t.ex. till ombud. Skall användas vid leverans via ombud.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DeliveryAddressDetails" type="DeliveryAddressDetails">
+				<xs:annotation>
+					<xs:documentation>Leveransadressdetaljer</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DeliveryAddressDetails">
+		<xs:annotation>
+			<xs:documentation>Leveransadressdetaljer</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="UnstructedAddress" type="UnstructedAddress">
+				<xs:annotation>
+					<xs:documentation>Adress i ostrukturerad form</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="UnstructedAddress">
+		<xs:annotation>
+			<xs:documentation>Adress i ostrukturerad form</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="UnstructedAddressLine" type="UnstructedAddressLine">
+				<xs:annotation>
+					<xs:documentation>Adressrad</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<!-- ************************************************************************** -->
+	<!-- Specifikation för XML-recept.                                              -->
+	<!--                                                                            -->
+	<!-- Version: 2.1                                                               -->
+	<!--                                                                            -->
+	<!-- ************************************************************************** -->
+	<!-- Include Types                                                              -->
+	<xs:include schemaLocation="Types.xsd"/>
+	<!-- Include MessageRoutingAddress                                              -->
+	<xs:include schemaLocation="Header.xsd"/>
+	<!-- Utväxlingsmeddelande                                                       -->
+	<!--                                                                            -->
+	<xs:element name="Interchange">
+		<xs:annotation>
+			<xs:documentation>Rootelement</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="MessageRoutingAddress" type="MessageRoutingAddress">
+					<xs:annotation>
+						<xs:documentation>Generellt meddelandehuvud tillämpas på e-recept. </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="ApplicationAcknowledgeMessage" type="ApplicationAcknowledgeMessage">
+					<xs:annotation>
+						<xs:documentation>Aperakmeddelande</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="ApplicationAcknowledgeMessage">
+		<xs:annotation>
+			<xs:documentation>Aperakmeddelande</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ReferedObjectInfo" type="ReferedObjectInfo">
+				<xs:annotation>
+					<xs:documentation>Information om refererat meddelandeobjekt i kvittensen</xs:documentation>
+					<xs:documentation>Här kan inkluderas information som det är relevant att eka tillbaka från det ursprungliga meddelandet (innanför kuvertet MessageRoutingAddress)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MessageStatus" type="MessageStatus">
+				<xs:annotation>
+					<xs:documentation>Övergripande status på meddelandet.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StatusInformation" type="StatusInformation" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>StatusInformation. Möjligt med flera statusinformationsrader. Även obligatoriskt vid MessageStatus = 0.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReferedObjectInfo">
+		<xs:annotation>
+			<xs:documentation>Information om refererat meddelandeobjekt i kvittensen.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PrescriptionSetId" type="PrescriptionSetIdType">
+				<xs:annotation>
+					<xs:documentation>Receptid på refererad objekt angivet av ursprunglig sändare av meddelandet.</xs:documentation>
+					<xs:documentation>Idtyp anges i attributet idtype.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PrescriptionSetIssueTime" type="PrescriptionSetIssueTime">
+				<xs:annotation>
+					<xs:documentation>Tidpunkt för utfärdade av refererat objekt, angivet av ursprunglig sändare av meddelandet.</xs:documentation>
+					<xs:documentation>ssyy-mm-ddTtt:mm. Datum är ett legalt krav. Tid (ned till minuter) är ett krav från Apoteket.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StatusInformation">
+		<xs:annotation>
+			<xs:documentation>StatusInformation</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="StatusCode" type="StatusCode">
+				<xs:annotation>
+					<xs:documentation>Informationskod. Prefix på statuskoden.</xs:documentation>
+					<xs:documentation>Används för att identifiera Statusinformation för behandling, mm. för t.ex. support, drift.</xs:documentation>
+					<xs:documentation>För att ange vilken typ av validering som fallerat läggs ett prefix på statuskoden.</xs:documentation>
+					<xs:documentation>01nnn XML validering,</xs:documentation>
+					<xs:documentation>02nnn validering av verksamhetsregler</xs:documentation>
+					<xs:documentation>Där nnn börjar på 001.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Description" type="Description">
+				<xs:annotation>
+					<xs:documentation>Beskrivnings av kodens innebörd.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

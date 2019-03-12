@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<!-- **************************************************************************        -->
+	<!-- Specifikation för XML-recept.                                                    -->
+	<!--                                                                                   -->
+	<!-- Version: 1.02 - För tester av äldre format                                                      -->
+	<!--                                                                                  -->
+	<!--                                                                                   -->
+	<!-- **************************************************************************        -->
+	<!-- Include Types                                                                     -->
+	<xs:include schemaLocation="Types1.02.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Specifikation för XML-Message Routing Address</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="MessageRoutingAddress">
+		<xs:annotation>
+			<xs:documentation>Meddelandehuvud, Transportinformation</xs:documentation>
+			<xs:documentation>Används som meddelandehuvud för e-recept och applikationskvittenser för e-recept.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Sender" type="Sender">
+				<xs:annotation>
+					<xs:documentation>Organisationsnummer alternativt EAN-kod, för sändande system</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SenderQualifier" type="SenderQualifier">
+				<xs:annotation>
+					<xs:documentation>Kodkvalificerare för sändare</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SubSender" type="SubSender">
+				<xs:annotation>
+					<xs:documentation>Systemidentitet för sändande system</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SubSenderInfo" type="SubSenderInfo">
+				<xs:annotation>
+					<xs:documentation>Ytterligare information om systemet som skapat meddelandet</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Recipient" type="Recipient">
+				<xs:annotation>
+					<xs:documentation>Mottagare. Organisationsnummer alternativt EAN-kod, för mottagande system</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RecipientQualifier" type="RecipientQualifier">
+				<xs:annotation>
+					<xs:documentation>Kodkvalificerare för mottagare</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SubRecipient" type="SubRecipient" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Systemidentitet för mottagande system</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SubRecipientInfo" type="SubRecipientInfo" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Ytterligare information om systemet som skapat det refererade meddelandet</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="InterchangeDate" type="InterchangeDate">
+				<xs:annotation>
+					<xs:documentation>Utväxlingsdatum</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="InterchangeTime" type="InterchangeTime">
+				<xs:annotation>
+					<xs:documentation>Utväxlingstidpunkt</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="InterchangeRef" type="InterchangeRefType">
+				<xs:annotation>
+					<xs:documentation>Överföringsreferens. Unik referens för överföringen given av avsändaren</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MessageType" type="MessageTypeType">
+				<xs:annotation>
+					<xs:documentation>Meddelandetyp e-recept = meddelande av typen e-recept</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MessageVersion" type="MessageVersion">
+				<xs:annotation>
+					<xs:documentation/>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TestIndicator" type="TestIndicator">
+				<xs:annotation>
+					<xs:documentation>Testindikator.</xs:documentation>
+					<xs:documentation>1 = Produktion (Recept giltiga att expediera)</xs:documentation>
+					<xs:documentation>2 = Test (Recept för testsyfte)</xs:documentation>
+					<xs:documentation>3 = Utbildning (Recept i utbildningssyfte)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SubSenderInfo">
+		<xs:annotation>
+			<xs:documentation>Ytterligare information om systemet som skapat meddelandet</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SystemName" type="SystemName">
+				<xs:annotation>
+					<xs:documentation>Namn på system</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SystemVersion" type="SystemVersion">
+				<xs:annotation>
+					<xs:documentation>Version på system</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ModuleVersion" type="ModuleVersion" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Version på eventuell använd modul i system</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SystemInfo" type="SystemInfo" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Information från system</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SubRecipientInfo">
+		<xs:annotation>
+			<xs:documentation>Ytterligare information om systemet som skapat det refererade meddelandet</xs:documentation>
+			<xs:documentation>All information i denna klass speglas tillbaka från SubSenderInfo från det refererade/kvitterade meddelandet.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SystemName" type="SystemName" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Namn på system</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SystemVersion" type="SystemVersion" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Version på system</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ModuleVersion" type="ModuleVersion" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Version på eventuell använd modul i system</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SystemInfo" type="SystemInfo" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Information från system</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

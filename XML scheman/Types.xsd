@@ -1,0 +1,856 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<!-- *************************************************************************************** -->
+	<!-- Specifikation för XML-recept.                                                          -->
+	<!--                                                                                         -->
+	<!-- Version: 2.1                                                                            -->
+	<!--                                                                                         -->  
+    <!--                                                                                         -->
+	<!-- **************************************************************************************** -->
+	<xs:annotation>
+		<xs:documentation>Specifikation av datatyper för e-recept</xs:documentation>
+	</xs:annotation>
+	<xs:simpleType name="AmountValue">
+		<xs:annotation>
+			<xs:documentation>Värde. Endast hela kronor.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:int">
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CareCoverageType">
+		<xs:annotation>
+			<xs:documentation>Förmånstyp</xs:documentation>
+			<xs:documentation>R=förmån</xs:documentation>
+			<xs:documentation>U=Utan förmån</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="R"/>
+			<xs:enumeration value="U"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CharacterSet">
+		<xs:annotation>
+			<xs:documentation>Tillåtna tecken för element- och attribut-data</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[&#32;-&#126;&#161;-&#255;]*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="City">
+		<xs:annotation>
+			<xs:documentation>Ort</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="28"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ContactPersonName">
+		<xs:annotation>
+			<xs:documentation>Namn: Förnamn Efternamn</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CharacterSet">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DeliveryMethod">
+		<xs:annotation>
+			<xs:documentation>Leveranssätt</xs:documentation>
+			<xs:documentation>MAI = Skickas som paket</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="MAI"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Description">
+		<xs:annotation>
+			<xs:documentation>Beskrivnings av kodens (StatusCode) innebörd.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CharacterSet">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="254"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DispensingRepeatNumber">
+		<xs:annotation>
+			<xs:documentation>Antal uttag. Antalet gånger som receptet kan expedieras</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:int">
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="99"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EANValue">
+		<xs:annotation>
+			<xs:documentation>EAN kod</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="13"/>
+			<xs:pattern value="[0-9]*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FamilyName">
+		<xs:annotation>
+			<xs:documentation>Efternamn</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CharacterSet">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FeeType">
+		<xs:annotation>
+			<xs:documentation>Typ av betalningsanspråk</xs:documentation>
+			<xs:documentation>ARV=Arvode</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ARV"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FirstGivenName">
+		<xs:annotation>
+			<xs:documentation>Förnamn</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CharacterSet">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FunctionOfMessage">
+		<xs:annotation>
+			<xs:documentation>Meddelandetyp</xs:documentation>
+			<xs:documentation>1= Förskrivning, vilket innebär förskrivning av läkemedel, hjälpmedel och livsmedel.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="HealthcareAgentIdType">
+		<xs:annotation>
+			<xs:documentation>Identifikation för sjukvårdsaktör</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="IdScheme" type="IdScheme">
+				<xs:annotation>
+					<xs:documentation>Kodtyp</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Value" type="String17">
+				<xs:annotation>
+					<xs:documentation>Kodvärde</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="IdOfMessageBySender">
+		<xs:annotation>
+			<xs:documentation>Sändarens unika identifikation på meddelandet</xs:documentation>
+			<xs:documentation>Idtyp anges i attributet idtype.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="41"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="IdOfMessageBySenderIdType">
+		<xs:annotation>
+			<xs:documentation>Typ av id.</xs:documentation>
+			<xs:documentation>Exempel: &lt;IdOfMessageBySender idtype=GUID&gt;0AF25F00-387D-11d3-9D31-00A0CC39621A&lt;/IdOfMessageBySender&gt;</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="UUID"/>
+			<xs:enumeration value="GUID"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="IdOfMessageBySenderType">
+		<xs:annotation>
+			<xs:documentation>Sändarens unika identifikation på meddelandet</xs:documentation>
+			<xs:documentation>Idtyp anges i attributet idtype.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="IdOfMessageBySender">
+				<xs:attribute name="idtype" type="IdOfMessageBySenderIdType" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="IdScheme">
+		<xs:annotation>
+			<xs:documentation>Kodtyp</xs:documentation>
+			<xs:documentation>VEN=Vårdande enhet</xs:documentation>
+			<xs:documentation>UTF=Utfärdare</xs:documentation>
+			<xs:documentation>EAN=EAN kod</xs:documentation>
+			<xs:documentation>PNR=Personummer</xs:documentation>
+			<xs:documentation>FDA=Födelsedatum utan löpnummer och kontrollsiffra</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="VEN"/>
+			<xs:enumeration value="UTF"/>
+			<xs:enumeration value="EAN"/>
+			<xs:enumeration value="PNR"/>
+			<xs:enumeration value="FDA"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="IdType">
+		<xs:annotation>
+			<xs:documentation>Typ av id</xs:documentation>
+			<xs:documentation>NVN=Nordiskt varunummer</xs:documentation>
+			<xs:documentation>PGI=Postgiro</xs:documentation>
+			<xs:documentation>BGI=Bankgiro</xs:documentation>
+			<xs:documentation>NPLID=NPL id</xs:documentation>
+			<xs:documentation>NPLPACK=NPL Pack id</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="NVN"/>
+			<xs:enumeration value="PGI"/>
+			<xs:enumeration value="BGI"/>
+			<xs:enumeration value="NPLID"/>
+			<xs:enumeration value="NPLPACK"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="IdValue">
+		<xs:annotation>
+			<xs:documentation>Id nummer</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="IndicationForPrescription">
+		<xs:annotation>
+			<xs:documentation>Förskrivningsorsak. enligt specifikation av Socialstyrelsen</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="5"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="InterchangeDate">
+		<xs:annotation>
+			<xs:documentation>Utväxlingsdatum</xs:documentation>
+			<xs:documentation>ccyy-mm-dd Datum då meddelandet skickas till mottagare.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:date">
+			<xs:pattern value="[1-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="InterchangeRef">
+		<xs:annotation>
+			<xs:documentation>Överföringsreferens. Unik referens för överföringen given av avsändaren</xs:documentation>
+			<xs:documentation>Idtyp anges i attributet idtype. </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="41"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="InterchangeRefIdType">
+		<xs:annotation>
+			<xs:documentation>Idtyp för InterchangeRef</xs:documentation>
+			<xs:documentation>UUID=Universal Unique IDentifier</xs:documentation>
+			<xs:documentation>GUID=Globally Unique IDentifier</xs:documentation>
+			<xs:documentation>Exempel: &lt;InterchangeRef idtype=GUID&gt;0AF25F00-387D-11d3-9D31-00A0CC39621A&lt;/InterchangeRef&gt;</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="UUID"/>
+			<xs:enumeration value="GUID"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="InterchangeRefType">
+		<xs:annotation>
+			<xs:documentation>Överföringsreferens. Unik referens för överföringen given av avsändaren</xs:documentation>
+			<xs:documentation>Idtyp anges i attributet idtype. </xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="InterchangeRef">
+				<xs:attribute name="idtype" type="InterchangeRefIdType" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="InterchangeTime">
+		<xs:annotation>
+			<xs:documentation>Utväxlingstidpunkt</xs:documentation>
+			<xs:documentation>hh:mm:ss Tidpunkt då meddelandet skickas till mottagare.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:time">
+			<xs:pattern value="[0-2][0-9]:[0-5][0-9]:[0-5][0-9]"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="IssueDateAndTimeOfMessage">
+		<xs:annotation>
+			<xs:documentation>Tidpunkt för skapande av meddelande.</xs:documentation>
+			<xs:documentation>ccyy-mm-ddThh:mm:ss. Denna tidpunkt kan vara samma som Tidpunkt för utfärdande (under recept) men kan avvika om det sker teknisk kontroll eller konvertering.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:dateTime">
+			<xs:pattern value="[1-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]T[0-2][0-9]:[0-5][0-9]:[0-5][0-9]"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LanguageOfLabel">
+		<xs:annotation>
+			<xs:documentation>Främmande språktyp, anvisningar i kodad form enligt IS0 639.</xs:documentation>
+			<xs:documentation>Språkkoder och användning i e-recept definieras enligt Bilaga: ISO 639 språkkoder doseringsanvisning e-recept.doc. XML-schemat uppdateras med kontroll av alla giltiga ISO-639-1 koder.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="2"/>
+			<xs:maxLength value="2"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LatestRequestedTimeForDispensing">
+		<xs:annotation>
+			<xs:documentation>Datum inom vilken första uttag av läkemedel måste göras</xs:documentation>
+			<xs:documentation>ccyy-mm-dd Kan användas för att ange begränsad giltighetstid för första uttaget. Aktiveras inte receptet senast detta datum anses hela receptet förverkat.</xs:documentation>
+			<xs:documentation> Aktiveras receptet senast detta datum gäller resten av uttagen 1 år från utfärdandedatum. Kan användas vid särskilda läkemedel eller vid förskrivning av exempelvis Antibiotika.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:date">
+			<xs:pattern value="[1-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MessageReceiptAcknowledgementRequest">
+		<xs:annotation>
+			<xs:documentation>Önskemål om kvittens på meddelandet</xs:documentation>
+			<xs:documentation>Aperakflagga, AL= Always</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AL"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MessageStatus">
+		<xs:annotation>
+			<xs:documentation>Övergripande status på meddelandet</xs:documentation>
+			<xs:documentation>0 = Accepterat utan upptäckta fel</xs:documentation>
+			<xs:documentation>1 = Accepterat med varningar</xs:documentation>
+			<xs:documentation>2 = Förkastat, kan ej hanteras av mottagaren.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="0"/>
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MessageType">
+		<xs:annotation>
+			<xs:documentation>Meddelandetyp</xs:documentation>
+			<xs:documentation>e-recept = meddelande av typen e-recept</xs:documentation>
+			<xs:documentation>Anger att innehållet i meddelandet följer strukturen för ett e-recept. Fler meddelandetyper kan tillkomma då användning utvidgas för detta meddelandehuvud.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="e-recept"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MessageTypeReceipt">
+		<xs:annotation>
+			<xs:documentation>Kvittenskvalificerare</xs:documentation>
+			<xs:documentation>no =  meddelandet är inte en kvittens utan ett e-recept</xs:documentation>
+			<xs:documentation>application =  applikationskvittens</xs:documentation>
+			<xs:documentation>Anger om och i så fall vilken typ av kvittens meddelandet utgör. Fler kvittenstyper kan tillkomma framöver.</xs:documentation>
+			<xs:documentation>Exempel: &lt;MessageType receipt=no&gt;e-recept&lt;/MessageType&gt; &lt;MessageType receipt=application&gt;e-recept&lt;/MessageType&gt;</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="no"/>
+			<xs:enumeration value="application"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="MessageTypeType">
+		<xs:annotation>
+			<xs:documentation>Meddelandetyp</xs:documentation>
+			<xs:documentation>e-recept = meddelande av typen e-recept</xs:documentation>
+			<xs:documentation>Anger att innehållet i meddelandet följer strukturen för ett e-recept. Fler meddelandetyper kan tillkomma då användning utvidgas för detta meddelandehuvud.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="MessageType">
+				<xs:attribute name="receipt" type="MessageTypeReceipt" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="MessageVersion">
+		<xs:annotation>
+			<xs:documentation>Version på meddelandet</xs:documentation>
+			<xs:documentation>Används för att kunna hantera olika versioner av t.ex. en Aperak.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ModuleVersion">
+		<xs:annotation>
+			<xs:documentation>Version på eventuell använd modul i systemet</xs:documentation>
+			<xs:documentation>Används för att identifiera eventuell modul som används.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Name">
+		<xs:annotation>
+			<xs:documentation>Namn, Förnamn Efternamn</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CharacterSet">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NumberOfPackages">
+		<xs:restriction base="xs:int">
+			<xs:annotation>
+				<xs:documentation>Antal förpackningar</xs:documentation>
+			</xs:annotation>
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="9999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NumberOrNameOfHouse">
+		<xs:annotation>
+			<xs:documentation>Gatunummer/lokalitet. Ex Vårdcentralen Humlan. Ej gatunummer</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CharacterSet">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PostalCode">
+		<xs:annotation>
+			<xs:documentation>Postnummer. Postnummer skall anges utan landkod, med fem siffror utan mellanrum.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="6"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PrescribersComment">
+		<xs:annotation>
+			<xs:documentation>Förskrivarens kommentar</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CharacterSet">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PrescriptionItemId">
+		<xs:annotation>
+			<xs:documentation>RecipeRadId. Identifierar ett reciperad inom ett recept.</xs:documentation>
+			<xs:documentation>Det är normalt ett sekvensnummer där man börjar med 1 inom varje recept. Dessa RecipeRadId måste vara</xs:documentation>
+			<xs:documentation>unika inom varje recept. Anm. Om man måste beskriva två förpackningstyper i ett recipe för att t.ex. skriva</xs:documentation>
+			<xs:documentation>ut 75 st med hjälp av 1 st 50 tabl och 1 st 25 tabl så upprepas hela PrescriptionItemDetails men med följande ItemId:</xs:documentation>
+			<xs:documentation>Man lägger -1 till första reciperadens PrescriptionItemId där förpackningstyp 1 beskrivs och -2 till andra</xs:documentation>
+			<xs:documentation> reciperadens PrescriptionItemId. Exempel: om det tredje recipet innehåller två typer av förpack-ningar skrivs</xs:documentation>
+			<xs:documentation>dessa som två PrescriptionItemDetails med den första PrescriptionItemId=3-1. Och den andra PrescriptionItemId=3-2</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[1-9][0-9]?(&#45;[1-9])?"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PrescriptionItemAuthTime">
+		<xs:annotation>
+			<xs:documentation>Datum för sista giltighetsdag för recept.</xs:documentation>
+			<xs:documentation>ccyy-mm-dd  Möjligheten att använda GILT tas bort. Förvalt värde är alltid 1 år från utfärdandedatum. Behöver ej användas idag.</xs:documentation>
+			<xs:documentation> Avsett för framtida bruk om man vill förkorta giltighetstid gällande alla uttag.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:date">
+			<xs:pattern value="[1-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PrescriptionSetId">
+		<xs:annotation>
+			<xs:documentation>Receptid. Ett receptid identifierar ett recept som är en samling av förskrivna varor (kan innefatta mer än läkemedel) till en patient vid ett visst tillfälle för ett visst syfte.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="41"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PrescriptionSetIdIdType">
+		<xs:annotation>
+			<xs:documentation>IdType för Receptid</xs:documentation>
+			<xs:documentation>UUID=Universal Unique IDentifier</xs:documentation>
+			<xs:documentation>GUID=Globally Unique IDentifier</xs:documentation>
+			<xs:documentation>Exempel: &lt;PrescriptionSetId idtype=GUID&gt;0AF25F00-387D-11d3-9D31-00A0CC39621A&lt;/PrescriptionSetId&gt;</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="UUID"/>
+			<xs:enumeration value="GUID"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="PrescriptionSetIdType">
+		<xs:annotation>
+			<xs:documentation>Receptid</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="PrescriptionSetId">
+				<xs:attribute name="idtype" type="PrescriptionSetIdIdType" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="PrescriptionSetIssueTime">
+		<xs:annotation>
+			<xs:documentation>Tidpunkt för utfärdade. Datum och tid för utfärdandet av receptet. Tidpunkt för utfärdande är tidpunkt då förskrivare skickar iväg recept från vårdapplikation.</xs:documentation>
+			<xs:documentation>ccyy-mm-ddThh:mm. Datum är ett legalt krav. Tid (ned till minuter) är ett krav från Apoteket.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[1-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]T[0-2][0-9]:[0-5][0-9]"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ProductId">
+		<xs:annotation>
+			<xs:documentation>Produktnummer</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="14"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ProductType">
+		<xs:annotation>
+			<xs:documentation>Produkttyp. Kodat värde</xs:documentation>
+			<xs:documentation>1 = Företagstillverkat läkemedel</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Qualification">
+		<xs:annotation>
+			<xs:documentation>Förskrivartyp alt. Yrkeskvalifikation</xs:documentation>
+			<xs:documentation>LAK = Läkare</xs:documentation>
+			<xs:documentation>ATL = AT-läkare</xs:documentation>
+			<xs:documentation>LMF = Läkare med förordnande</xs:documentation>
+			<xs:documentation>TAN = Tandläkare</xs:documentation>
+			<xs:documentation>TAH = Tandhygienist</xs:documentation>
+			<xs:documentation>SSK = Sjuksköterska med särskild behörighet</xs:documentation>
+			<xs:documentation>BMO = Barnmorska</xs:documentation>
+			<xs:documentation>VET = Veterinär</xs:documentation>
+			<xs:documentation>HJM = Hjälpmedelsförskrivare</xs:documentation>
+			<xs:documentation>DIT = Dietist</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="LAK"/>
+			<xs:enumeration value="ATL"/>
+			<xs:enumeration value="LMF"/>
+			<xs:enumeration value="TAN"/>
+			<xs:enumeration value="TAH"/>
+			<xs:enumeration value="SSK"/>
+			<xs:enumeration value="BMO"/>
+			<xs:enumeration value="VET"/>
+			<xs:enumeration value="HJM"/>
+			<xs:enumeration value="DIT"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ReceiptType">
+		<xs:annotation>
+			<xs:documentation>Kvittotyp</xs:documentation>
+			<xs:documentation>no=meddelandet är inte en kvitten</xs:documentation>
+			<xs:documentation>application=applikationskvittens</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="no"/>
+			<xs:enumeration value="application"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Recipient">
+		<xs:annotation>
+			<xs:documentation>Mottagare. Organisationsnummer alternativt EAN-kod, för mottagande system</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RecipientQualifier">
+		<xs:annotation>
+			<xs:documentation>Kvalificerare för Mottagare.</xs:documentation>
+			<xs:documentation>14 = EAN</xs:documentation>
+			<xs:documentation>30 = Organisationsnummer</xs:documentation>
+			<xs:documentation>ZZZ = Avtalad struktur mellan parterna.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="14"/>
+			<xs:enumeration value="30"/>
+			<xs:enumeration value="ZZZ"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Role">
+		<xs:annotation>
+			<xs:documentation>Roll</xs:documentation>
+			<xs:documentation>SND=sändare av meddelandet</xs:documentation>
+			<xs:documentation>RCV=mottagare av meddelandet</xs:documentation>
+			<xs:documentation>PRESCRIBER=förskrivaren</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="SND"/>
+			<xs:enumeration value="RCV"/>
+			<xs:enumeration value="PRESCRIBER"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Sender">
+		<xs:annotation>
+			<xs:documentation>Organisationsnummer alternativt EAN-kod, för sändande system.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SenderQualifier">
+		<xs:annotation>
+			<xs:documentation>Kvalificerare för Sändare.</xs:documentation>
+			<xs:documentation>14 = EAN</xs:documentation>
+			<xs:documentation>30 = Organisationsnummer</xs:documentation>
+			<xs:documentation>ZZZ = Avtalad struktur mellan parterna.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="14"/>
+			<xs:enumeration value="30"/>
+			<xs:enumeration value="ZZZ"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ServiceAgreementType">
+		<xs:annotation>
+			<xs:documentation>Identifiering av finansieringsavtal</xs:documentation>
+			<xs:documentation>STA = Staten</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="STA"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Sex">
+		<xs:annotation>
+			<xs:documentation>Kön</xs:documentation>
+			<xs:documentation>Enligt Socialstyrelsens  föreskrifter, SOSFS 2003:13 (M),</xs:documentation>
+			<xs:documentation>Man = 1 och Kvinna = 2.  Avviker från GPIC-standarden (EN 14822-2, GPIC 9.1.2.2 Person):</xs:documentation>
+			<xs:documentation>3=ej specificerat</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+			<xs:enumeration value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Status">
+		<xs:annotation>
+			<xs:documentation>Status</xs:documentation>
+			<xs:documentation>1=Förskriven</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="StatusCode">
+		<xs:annotation>
+			<xs:documentation>Infomrationskod</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="5"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="StreetName">
+		<xs:annotation>
+			<xs:documentation>Gatuadress. Ex Storgatan 7, gatunummer skall anges i Gatuadress.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CharacterSet">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="String17">
+		<xs:annotation>
+			<xs:documentation>Sträng med maxlängden 17</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CharacterSet">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="17"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SubRecipient">
+		<xs:annotation>
+			<xs:documentation>Systemidentitet för mottagande system</xs:documentation>
+			<xs:documentation>För applikationskvittens är detta samma som Subsender på kvitterat meddelande.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SubSender">
+		<xs:annotation>
+			<xs:documentation>Systemidentitet för sändande system</xs:documentation>
+			<xs:documentation>Obligatoriskt vid begäran om applikationskvittens (AL)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SubstitutionType">
+		<xs:annotation>
+			<xs:documentation>Typ av utbyte.</xs:documentation>
+			<xs:documentation>EBY=Får ej bytas mot generika</xs:documentation>
+			<xs:documentation>PRO=Startförpackning</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="EBY"/>
+			<xs:enumeration value="PRO"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SystemInfo">
+		<xs:annotation>
+			<xs:documentation>Info på System</xs:documentation>
+			<xs:documentation>Kan användas för att skicka godtycklig information som återfinns i aperaken. Det kan t ex handla om ytterligare routinginformation</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SystemName">
+		<xs:annotation>
+			<xs:documentation>Namn på System, t.ex. 1.03</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SystemVersion">
+		<xs:annotation>
+			<xs:documentation>Version på systemet</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Telecommunication">
+		<xs:annotation>
+			<xs:documentation>Telefonnummer. Inklusive riktnummer. Telefonnummer till sändare av meddelande obligatoriskt. ATS kan hantera 3 telefonnummer vid manuell registrering.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="13"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TelecommunicationNumber">
+		<xs:annotation>
+			<xs:documentation>Telefonnummer, inklusive riktnummer</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="13"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TestIndicator">
+		<xs:annotation>
+			<xs:documentation>Testindikator</xs:documentation>
+			<xs:documentation>1 = Produktion (Recept giltiga att expediera)</xs:documentation>
+			<xs:documentation>2 = Test (Recept för testsyfte)</xs:documentation>
+			<xs:documentation>3 = Utbildning (Recept i utbildningssyfte)</xs:documentation>
+			<xs:documentation>Ekas tillbaka från testindicator i refererat meddelande.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+			<xs:enumeration value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TimeUnit">
+		<xs:annotation>
+			<xs:documentation>Tidsenhet</xs:documentation>
+			<xs:documentation>Dg=dag/dagar</xs:documentation>
+			<xs:documentation>V=vecka</xs:documentation>
+			<xs:documentation>Mn=månad</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Dg"/>
+			<xs:enumeration value="V"/>
+			<xs:enumeration value="Mn"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TimeValue">
+		<xs:annotation>
+			<xs:documentation>Tidsvärde</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:int">
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="365"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TypeOfInstruction">
+		<xs:annotation>
+			<xs:documentation>Typ av instruktion</xs:documentation>
+			<xs:documentation>1 = Doseringsanvisning</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TypeOfSubjectOfCare">
+		<xs:annotation>
+			<xs:documentation>Patienttyp</xs:documentation>
+			<xs:documentation>1=Person</xs:documentation>
+			<xs:documentation>2=Djur</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Unit">
+		<xs:annotation>
+			<xs:documentation>Enhet, Betalningsvaluta</xs:documentation>
+			<xs:documentation>SEK = Svenska kronor</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="SEK"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="UnstructedAddressLine">
+		<xs:annotation>
+			<xs:documentation>Adressrad</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CharacterSet">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="UnstructuredDosageAdmin">
+		<xs:annotation>
+			<xs:documentation>Instruktion till patienten</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CharacterSet">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="254"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="UrgencyOfMessage">
+		<xs:annotation>
+			<xs:documentation>Brådskandegrad för meddelandet</xs:documentation>
+			<xs:documentation>N=Normal, H=High</xs:documentation>
+			<xs:documentation>Endast N=Normal används.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="N"/>
+			<xs:enumeration value="H"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- UTFValue                                                                   -->
+	<!--                                                                            -->
+	<xs:simpleType name="UTFValue">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="17"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- VENValue                                                                   -->
+	<!--                                                                            -->
+	<xs:simpleType name="VENValue">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="17"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
