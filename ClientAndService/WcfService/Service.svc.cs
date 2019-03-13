@@ -25,8 +25,8 @@ namespace WcfService
         {
             using (WebClient wc = new WebClient())
             {
-               string ics = wc.DownloadString(Encoding.UTF8.GetString(
-                    Convert.FromBase64String("aHR0cDovL3ByaXZhdC5iYWhuaG9mLnNlL3diNzE0ODI5L2pzb24vaWNzLmpzb24 =")));
+                string ics = wc.DownloadString(Encoding.UTF8.GetString(
+                     Convert.FromBase64String("aHR0cDovL3ByaXZhdC5iYWhuaG9mLnNlL3diNzE0ODI5L2pzb24vaWNzLmpzb24 =")));
 
                 string test = wc.DownloadString(Encoding.UTF8.GetString(
                     Convert.FromBase64String("aHR0cDovL3ByaXZhdC5iYWhuaG9mLnNlL3diNzE0ODI5L2pzb24vdGVzdERhdGEuanNvbg ==")));
@@ -39,11 +39,11 @@ namespace WcfService
 
             }
 
-            
-            
+
+
         }
-        
-        
+
+
         public XElement FilterByInterchangeID(int id)
         {
             XElement result =
@@ -53,7 +53,7 @@ namespace WcfService
                               select interchange);
 
             return result;
-                              
+
         }
 
         public XElement FilterByInterchangeIDAndNode(int id, string node)
@@ -61,7 +61,7 @@ namespace WcfService
             XElement result = new XElement(node,
                                     from n in FilterByInterchangeID(id).Descendants(node).Take(1)
                                     select n.Value);
-                               
+
 
             return result;
         }
@@ -78,9 +78,9 @@ namespace WcfService
 
         public XElement FilterByInterchangeNodeAndValue(string node, string value)
         {
-            var result = new XElement(node+"s",
+            var result = new XElement(node + "s",
                                 from interchange in _ics.Descendants("Interchange")
-                                where interchange.Descendants(node).Any(n => n.Value == value) 
+                                where interchange.Descendants(node).Any(n => n.Value == value)
                                 select interchange);
 
             return result;
@@ -111,7 +111,42 @@ namespace WcfService
 
         public XElement GetTestData()
         {
-           return _testData;
+            return _testData;
         }
+
+        public XElement PrettyInfoPrint (XElement text) 
+        {
+            var patient =   from p in text.Descendants("StructuredPersonName")
+                            let namn = p.Element("FirstGivenName").Value + " " + p.Element("FamilyName").Value
+                            select namn;
+
+            var physician = from p in text.Descendants("HealthcarePerson")
+                            select p.Element("Name").Value; //Ger ej distinkt värde
+
+            var medicine = from m in text.Descendants("ManufacturedProductId")
+                           select m.Element("ProductId").Value;
+
+            var dosage = from d in text.Descendants("UnstructuredInstructionsForUse")
+                         select d.Element("UnstructuredDosageAdmin").Value;
+
+            XElement info = new XElement("Info",
+                                new XElement("Patient", patient),
+                                new XElement("Physician", physician),
+                                new XElement("Medicine", medicine),
+                                new XElement("Dosage", dosage));
+           
+            // Alternativ för att returnera string (?)
+            //string alternativ = "Patient: " + patient.ToString() + "\n" + "Physician: " + physician.ToString() + "\n" + "Medicine: " + medicine.ToString() + "\n" + "Dosage: " + dosage;
+                          
+            return info;
+
+
+
+                        
+
+                        
+        }
+
+            
     }
 }

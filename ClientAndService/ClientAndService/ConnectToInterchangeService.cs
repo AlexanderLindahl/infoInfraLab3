@@ -50,6 +50,13 @@ namespace Client
         {
             _Result = service.FilterByInterchangeNodeAndValue(node, nodeValue);
         }
+        public void GetPrettyInfoPrint(XElement text)
+        {
+            _Result = service.PrettyInfoPrint(text);
+        }
+
+
+
        
     }
 }

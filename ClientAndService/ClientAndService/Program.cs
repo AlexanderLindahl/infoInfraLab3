@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WcfService;
 using System.Net;
+using System.Xml.Linq;
 
 
 namespace Client
@@ -15,7 +16,9 @@ namespace Client
         static void Main(string[] args)
         {
             ConnectToInterchangeService conServ = new ConnectToInterchangeService();
-            int i = 9;
+
+           
+            int i = 10;
             while(i != 0){
                 Console.WriteLine("Hej och välkommen till vår service");
                 Console.WriteLine("1. GetAll");
@@ -24,8 +27,9 @@ namespace Client
                 Console.WriteLine("4. GetFilteredByNode");
                 Console.WriteLine("5. GetFilteredByIDAndNode");
                 Console.WriteLine("6. GetFilteredByNodeValue");
-                Console.WriteLine("7. Spara Resultat");
-                Console.WriteLine("8. Avsluta");
+                Console.WriteLine("7. Läs in ny fil");
+                Console.WriteLine("8. Spara Resultat");
+                Console.WriteLine("9. Avsluta");
 
                 Console.WriteLine("vad vill du göra?");
                 i = Int32.Parse(Console.ReadLine());
@@ -67,10 +71,15 @@ namespace Client
                         Console.WriteLine(conServ.Result);
                         break;
                     case 7:
+                        XElement info = XElement.Parse(FileBackup.LoadFile());
+                        conServ.GetPrettyInfoPrint(info);
+                        Console.WriteLine(conServ.Result);
+                        break;
+                    case 8:
                         FileBackup.SaveToFile(conServ.Result.ToString());
                         Console.WriteLine("Resultat sparat");
                         break;
-                    case 8:
+                    case 9:
                         Console.WriteLine("Har du sparat ditt resultat?" + "\n" + "1. Spara och avsluta" + "\n" + "2. Avsluta");
                         string svar = Console.ReadLine();
 
