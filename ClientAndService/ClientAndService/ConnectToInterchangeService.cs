@@ -23,6 +23,7 @@ namespace Client
             {
                 _Result = value;
                 _Result.Add(new XAttribute("Datum&Tid", DateTime.Now.Minute));
+                
             }
         }
 
@@ -50,13 +51,24 @@ namespace Client
         {
             _Result = service.FilterByInterchangeNodeAndValue(node, nodeValue);
         }
-        public void GetPrettyInfoPrint(XElement text)
+        public string GetPrettyInfoPrint(XElement text)
         {
-            _Result = service.PrettyInfoPrint(text);
+            
+            return  service.PrettyInfoPrint(text);
+            
+        }
+        public bool CheckID(string id)
+        {
+            foreach (char c in id)
+            {
+                if (c < '0' || c > '9')
+                    return false;
+            }
+            return true;
         }
 
 
 
-       
+
     }
 }

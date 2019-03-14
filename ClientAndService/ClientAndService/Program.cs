@@ -17,7 +17,7 @@ namespace Client
         {
             ConnectToInterchangeService conServ = new ConnectToInterchangeService();
 
-           
+            string SID = "";
             int i = 10;
             while(i != 0){
                 Console.WriteLine("Hej och välkommen till vår service");
@@ -46,8 +46,18 @@ namespace Client
                         break;
                     case 3:
                         Console.WriteLine("Skriv in vilket id du vill kolla efter");
-                        conServ.GetFilteredByID(Int32.Parse(Console.ReadLine()));
+                        SID = Console.ReadLine();
+
+                        if(conServ.CheckID(SID) == true)
+                        {
+                        conServ.GetFilteredByID(Int32.Parse(SID));
                         Console.WriteLine(conServ.Result);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Du måste skriva in ett giltigt ID-format");
+                        }
+                        
                         break;
                     case 4:
                         Console.WriteLine("skriv in vilken nod du letar efter");
@@ -55,8 +65,18 @@ namespace Client
                         Console.WriteLine(conServ.Result);
                         break;
                     case 5:
-                        Console.WriteLine("vilket ID vill du leta efter?");
-                        int id = Int32.Parse(Console.ReadLine());
+                        bool correctId = false;
+                        
+                        while ( correctId == false) {
+                            Console.WriteLine("vilket ID vill du leta efter?");
+                            SID = Console.ReadLine();
+                            correctId = conServ.CheckID(SID);
+                            if(correctId == false)
+                            {
+                                Console.WriteLine("Du måste skriva in ett giltigt ID-format");
+                            }
+                        }
+                        int id = Int32.Parse(SID);
                         Console.WriteLine("vilken nod letar du efter?");
                         string node = Console.ReadLine();
                         conServ.GetFilteredByIDAndNode(id, node);
@@ -72,8 +92,8 @@ namespace Client
                         break;
                     case 7:
                         XElement info = XElement.Parse(FileBackup.LoadFile());
-                        conServ.GetPrettyInfoPrint(info);
-                        Console.WriteLine(conServ.Result);
+                        
+                        Console.WriteLine(conServ.GetPrettyInfoPrint(info));
                         break;
                     case 8:
                         FileBackup.SaveToFile(conServ.Result.ToString());

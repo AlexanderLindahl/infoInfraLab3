@@ -28,3 +28,17 @@ x:\Desktop\InfoInfra\Lab3\infoInfraLab3\ClientAndService\ClientAndService\obj\De
 x:\Desktop\InfoInfra\Lab3\infoInfraLab3\ClientAndService\ClientAndService\obj\Debug\Client.csproj.CopyComplete
 x:\Desktop\InfoInfra\Lab3\infoInfraLab3\ClientAndService\ClientAndService\obj\Debug\ClientAndService.exe
 x:\Desktop\InfoInfra\Lab3\infoInfraLab3\ClientAndService\ClientAndService\obj\Debug\ClientAndService.pdb
+D:\Skola\InfoInfra\infoInfraLab3\ClientAndService\ClientAndService\bin\Debug\ClientAndService.exe.config
+D:\Skola\InfoInfra\infoInfraLab3\ClientAndService\ClientAndService\bin\Debug\ClientAndService.exe
+D:\Skola\InfoInfra\infoInfraLab3\ClientAndService\ClientAndService\bin\Debug\ClientAndService.pdb
+D:\Skola\InfoInfra\infoInfraLab3\ClientAndService\ClientAndService\bin\Debug\Newtonsoft.Json.dll
+D:\Skola\InfoInfra\infoInfraLab3\ClientAndService\ClientAndService\bin\Debug\WcfService.dll
+D:\Skola\InfoInfra\infoInfraLab3\ClientAndService\ClientAndService\bin\Debug\WcfService.pdb
+D:\Skola\InfoInfra\infoInfraLab3\ClientAndService\ClientAndService\bin\Debug\WcfService.dll.config
+D:\Skola\InfoInfra\infoInfraLab3\ClientAndService\ClientAndService\bin\Debug\Newtonsoft.Json.pdb
+D:\Skola\InfoInfra\infoInfraLab3\ClientAndService\ClientAndService\bin\Debug\Newtonsoft.Json.xml
+D:\Skola\InfoInfra\infoInfraLab3\ClientAndService\ClientAndService\obj\Debug\Client.csprojAssemblyReference.cache
+D:\Skola\InfoInfra\infoInfraLab3\ClientAndService\ClientAndService\obj\Debug\Client.csproj.CoreCompileInputs.cache
+D:\Skola\InfoInfra\infoInfraLab3\ClientAndService\ClientAndService\obj\Debug\Client.csproj.CopyComplete
+D:\Skola\InfoInfra\infoInfraLab3\ClientAndService\ClientAndService\obj\Debug\ClientAndService.exe
+D:\Skola\InfoInfra\infoInfraLab3\ClientAndService\ClientAndService\obj\Debug\ClientAndService.pdb
