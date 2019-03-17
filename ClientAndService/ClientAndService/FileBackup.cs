@@ -13,12 +13,19 @@ namespace Client
 
         public static void SaveToFile(string content)
         {
-            SaveFileDialog sfd = new SaveFileDialog();
-            sfd.Filter = "Text-file | *.txt | XML-file | *.xml | Any-file | *.any";
-
-            if (sfd.ShowDialog() == DialogResult.OK)
+            if (content != null)
             {
-                File.WriteAllText(sfd.FileName, content);
+                SaveFileDialog sfd = new SaveFileDialog();
+                sfd.Filter = "Text-file | *.txt | XML-file | *.xml | Any-file | *.any";
+
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    File.WriteAllText(sfd.FileName, content);
+                }
+            }
+            else
+            {
+                Console.WriteLine("DU har inte ett resultat att spara");
             }
            
         }

@@ -96,8 +96,17 @@ namespace Client
                         Console.WriteLine(conServ.GetPrettyInfoPrint(info));
                         break;
                     case 8:
-                        FileBackup.SaveToFile(conServ.Result.ToString());
-                        Console.WriteLine("Resultat sparat");
+                        if(conServ.Result != null)
+                        {
+                            FileBackup.SaveToFile(conServ.Result.ToString());
+                            Console.WriteLine("Resultat sparat");
+
+                        }
+                        else
+                        {
+                            Console.WriteLine("du har ännu inte ett resultat att spara");
+                        }
+                        
                         break;
                     case 9:
                         Console.WriteLine("Har du sparat ditt resultat?" + "\n" + "1. Spara och avsluta" + "\n" + "2. Avsluta");
