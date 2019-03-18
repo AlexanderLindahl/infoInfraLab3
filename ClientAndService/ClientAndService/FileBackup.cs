@@ -16,7 +16,7 @@ namespace Client
             if (content != null)
             {
                 SaveFileDialog sfd = new SaveFileDialog();
-                sfd.Filter = "Text-file | *.txt | XML-file | *.xml | Any-file | *.any";
+                sfd.Filter = "Text-file | *.txt | XML-file | *.xml | Any-file | *.*";
 
                 if (sfd.ShowDialog() == DialogResult.OK)
                 {
@@ -25,7 +25,7 @@ namespace Client
             }
             else
             {
-                Console.WriteLine("DU har inte ett resultat att spara");
+                Console.WriteLine("Du har inte ett resultat att spara");
             }
            
         }
@@ -33,8 +33,7 @@ namespace Client
         public static string LoadFile()
         {
             OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Filter = "Text-file (*.txt) | *.txt |" + "Any-file (*.*) | *.*|" + "XML-file (*.xml) | *.xml ";
-            
+            ofd.Filter = "Text-file (*.txt) | *.txt| Any-file (*.*) | *.*| XML-file (*.xml) | *.xml";
             
             string text = "";
 
