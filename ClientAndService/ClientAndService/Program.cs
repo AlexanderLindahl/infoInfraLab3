@@ -18,6 +18,7 @@ namespace Client
             ConnectToInterchangeService conServ = new ConnectToInterchangeService();
 
             string SID = "";
+            string option = "hej";
             int i = 10;
             while(i != 0){
                 Console.WriteLine("Hej och välkommen till vår service");
@@ -31,8 +32,13 @@ namespace Client
                 Console.WriteLine("8. Spara Resultat");
                 Console.WriteLine("9. Avsluta");
 
-                Console.WriteLine("vad vill du göra?"+ "\n");
-                i = Int32.Parse(Console.ReadLine());
+                option = Console.ReadLine();
+                if(CheckID(option) == true)
+                {
+                   i= Int32.Parse(option);
+                }
+             
+                
                 if(i < 1 || i > 9)
                 {
                     Console.WriteLine("du måste välja ett nummer ur listan");
@@ -111,6 +117,20 @@ namespace Client
                             Console.WriteLine("du har ännu inte ett resultat att spara");
                         }
                         
+                        break;
+
+                    case 10:
+                        if (conServ.Result != null)
+                        {
+                            string s = FileBackup.LoadFile();
+                            Console.WriteLine(s);
+
+                        }
+                        else
+                        {
+                            Console.WriteLine("du har ännu inte ett resultat att spara");
+                        }
+
                         break;
                     case 9:
                         Console.WriteLine("Har du sparat ditt resultat?" + "\n" + "1. Spara och avsluta" + "\n" + "2. Avsluta");

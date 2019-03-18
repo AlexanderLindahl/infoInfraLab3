@@ -51,8 +51,6 @@ namespace Client
         {
             Result = service.FilterByInterchangeNodeAndValue(node, nodeValue);
         }
-        
-        
 
 
 

@@ -35,7 +35,7 @@ namespace WcfService
 
                 _testData = JsonConvert.DeserializeObject<XElement>(test);
 
-                _ics = _testData;
+                _ics = _interchanges;
 
             }
 

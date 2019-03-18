@@ -16,7 +16,7 @@ namespace Client
             if (content != null)
             {
                 SaveFileDialog sfd = new SaveFileDialog();
-                sfd.Filter = "Text-file | *.txt | XML-file | *.xml | Any-file | *.*";
+                sfd.Filter = "Text-file | *.txt| XML-file | *.xml| Any-file | *.*";
 
                 if (sfd.ShowDialog() == DialogResult.OK)
                 {
