@@ -33,7 +33,9 @@ namespace Client
         public static string LoadFile()
         {
             OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Filter = "Text-file | *.txt | XML-file | *.xml | Any-file | *.any";
+            ofd.Filter = "Text-file (*.txt) | *.txt |" + "Any-file (*.*) | *.*|" + "XML-file (*.xml) | *.xml ";
+            
+            
             string text = "";
 
             if (ofd.ShowDialog() == DialogResult.OK)

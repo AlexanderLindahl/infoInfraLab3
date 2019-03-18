@@ -114,46 +114,7 @@ namespace WcfService
             return _testData;
         }
 
-        public string PrettyInfoPrint (XElement text) 
-        {
-            string alternativ = "";
-            int i = 0;
-            foreach (XElement element in text.Descendants("Interchange")) {
-                i++;
-                string interchange = "Interchange nmbr: " + i;
-
-                var patient = from p in element.Descendants("StructuredPersonName")
-                              let namn = p.Element("FirstGivenName").Value + " " + p.Element("FamilyName").Value
-                              select namn;
-
-                var physician = (from p in element.Descendants("HealthcarePerson")
-                                 select p.Element("Name").Value).GroupBy(x => x).Select(x => x.First());
-
-                var medicine = from m in element.Descendants("ManufacturedProductId")
-                               select m.Element("ProductId").Value;
-
-                var dosage = from d in element.Descendants("UnstructuredInstructionsForUse")
-                             select d.Element("UnstructuredDosageAdmin").Value;
-
-                XElement info = new XElement("Info",
-                                    new XElement("Patient", patient),
-                                    new XElement("Physician", physician),
-                                    new XElement("Medicine", medicine),
-                                    new XElement("Dosage", dosage));
-
-                // Alternativ för att returnera string (?)
-                alternativ = alternativ + interchange + "\n" + "Patient: " + info.Element("Patient").Value + "\n" + "Physician: " + info.Element("Physician").Value + "\n" + "Medicine: " + info.Element("Medicine").Value + "\n" + "Dosage: " + info.Element("Dosage").Value + "\n";
-
-            }
-          
-            return alternativ;
-
-
-
-                        
-
-                        
-        }
+        
 
         
 

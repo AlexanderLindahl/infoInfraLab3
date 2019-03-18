@@ -33,3 +33,14 @@ D:\Skola\InfoInfra\infoInfraLab3\ClientAndService\WcfService\bin\Newtonsoft.Json
 D:\Skola\InfoInfra\infoInfraLab3\ClientAndService\WcfService\bin\Newtonsoft.Json.pdb
 D:\Skola\InfoInfra\infoInfraLab3\ClientAndService\WcfService\bin\Newtonsoft.Json.xml
 D:\Skola\InfoInfra\infoInfraLab3\ClientAndService\WcfService\obj\Debug\WcfService.csproj.CopyComplete
+x:\Desktop\infoInfraLab3\ClientAndService\WcfService\bin\WcfService.dll.config
+x:\Desktop\infoInfraLab3\ClientAndService\WcfService\bin\WcfService.dll
+x:\Desktop\infoInfraLab3\ClientAndService\WcfService\bin\WcfService.pdb
+x:\Desktop\infoInfraLab3\ClientAndService\WcfService\bin\Newtonsoft.Json.dll
+x:\Desktop\infoInfraLab3\ClientAndService\WcfService\bin\Newtonsoft.Json.pdb
+x:\Desktop\infoInfraLab3\ClientAndService\WcfService\bin\Newtonsoft.Json.xml
+x:\Desktop\infoInfraLab3\ClientAndService\WcfService\obj\Debug\WcfService.csprojAssemblyReference.cache
+x:\Desktop\infoInfraLab3\ClientAndService\WcfService\obj\Debug\WcfService.csproj.CoreCompileInputs.cache
+x:\Desktop\infoInfraLab3\ClientAndService\WcfService\obj\Debug\WcfService.csproj.CopyComplete
+x:\Desktop\infoInfraLab3\ClientAndService\WcfService\obj\Debug\WcfService.dll
+x:\Desktop\infoInfraLab3\ClientAndService\WcfService\obj\Debug\WcfService.pdb

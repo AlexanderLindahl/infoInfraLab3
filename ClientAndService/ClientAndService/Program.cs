@@ -31,8 +31,12 @@ namespace Client
                 Console.WriteLine("8. Spara Resultat");
                 Console.WriteLine("9. Avsluta");
 
-                Console.WriteLine("vad vill du göra?");
+                Console.WriteLine("vad vill du göra?"+ "\n");
                 i = Int32.Parse(Console.ReadLine());
+                if(i < 1 || i > 9)
+                {
+                    Console.WriteLine("du måste välja ett nummer ur listan");
+                }
                 switch(i)
                 {
                 
@@ -48,7 +52,7 @@ namespace Client
                         Console.WriteLine("Skriv in vilket id du vill kolla efter");
                         SID = Console.ReadLine();
 
-                        if(conServ.CheckID(SID) == true)
+                        if(CheckID(SID) == true)
                         {
                         conServ.GetFilteredByID(Int32.Parse(SID));
                         Console.WriteLine(conServ.Result);
@@ -70,7 +74,7 @@ namespace Client
                         while ( correctId == false) {
                             Console.WriteLine("vilket ID vill du leta efter?");
                             SID = Console.ReadLine();
-                            correctId = conServ.CheckID(SID);
+                            correctId = CheckID(SID);
                             if(correctId == false)
                             {
                                 Console.WriteLine("Du måste skriva in ett giltigt ID-format");
@@ -93,7 +97,7 @@ namespace Client
                     case 7:
                         XElement info = XElement.Parse(FileBackup.LoadFile());
                         
-                        Console.WriteLine(conServ.GetPrettyInfoPrint(info));
+                        Console.WriteLine(PrettyInfoPrint(info));
                         break;
                     case 8:
                         if(conServ.Result != null)
@@ -131,7 +135,57 @@ namespace Client
                 }
 
             }
+            string PrettyInfoPrint(XElement text)
+            {
+                string prettyString = "";
+                int j = 0;
+                foreach (XElement element in text.Descendants("Interchange"))
+                {
+                    j++;
+                    string interchange = "Interchange nmbr: " + j;
 
+                    var patient = from p in element.Descendants("StructuredPersonName")
+                                  let namn = p.Element("FirstGivenName").Value + " " + p.Element("FamilyName").Value
+                                  select namn;
+
+                    var physician = (from p in element.Descendants("HealthcarePerson")
+                                     select p.Element("Name").Value).GroupBy(x => x).Select(x => x.First());
+
+                    var medicine = from m in element.Descendants("ManufacturedProductId")
+                                   select m.Element("ProductId").Value;
+
+                    var dosage = from d in element.Descendants("UnstructuredInstructionsForUse")
+                                 select d.Element("UnstructuredDosageAdmin").Value;
+
+                    XElement info = new XElement("Info",
+                                        new XElement("Patient", patient),
+                                        new XElement("Physician", physician),
+                                        new XElement("Medicine", medicine),
+                                        new XElement("Dosage", dosage));
+
+                    // Alternativ för att returnera string (?)
+                    prettyString = prettyString + interchange + "\n" + "Patient: " + info.Element("Patient").Value + "\n" + "Physician: " + info.Element("Physician").Value + "\n" + "Medicine: " + info.Element("Medicine").Value + "\n" + "Dosage: " + info.Element("Dosage").Value + "\n";
+
+                }
+                
+
+                return prettyString;
+
+
+
+
+
+
+            }
+            bool CheckID(string id)
+            {
+                foreach (char c in id)
+                {
+                    if (c < '0' || c > '9')
+                        return false;
+                }
+                return true;
+            }
 
 
         }

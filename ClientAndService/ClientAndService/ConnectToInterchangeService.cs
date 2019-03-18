@@ -22,50 +22,37 @@ namespace Client
             set
             {
                 _Result = value;
-                _Result.Add(new XAttribute("Datum&Tid", DateTime.Now.Minute));
+                _Result.Add(new XAttribute("DatumOchTid", DateTime.Now));
                 
             }
         }
 
         public void GetAll()
         {
-            _Result = service.GetAllInterchanges();
+            Result = service.GetAllInterchanges();
         }
         public void GetTestData()
         {
-            _Result = service.GetTestData();
+            Result = service.GetTestData();
         }
         public void GetFilteredByID(int id)
         {
-            _Result = service.FilterByInterchangeID(id);
+            Result = service.FilterByInterchangeID(id);
         }
         public void GetFilteredByNode(string node)
         {
-            _Result = service.FilterByInterchangeNode(node);
+            Result = service.FilterByInterchangeNode(node);
         }
         public void GetFilteredByIDAndNode(int id, string node)
         {
-            _Result = service.FilterByInterchangeIDAndNode(id, node);
+            Result = service.FilterByInterchangeIDAndNode(id, node);
         }
         public void GetFilteredByNodeValue(string node, string nodeValue)
         {
-            _Result = service.FilterByInterchangeNodeAndValue(node, nodeValue);
+            Result = service.FilterByInterchangeNodeAndValue(node, nodeValue);
         }
-        public string GetPrettyInfoPrint(XElement text)
-        {
-            
-            return  service.PrettyInfoPrint(text);
-            
-        }
-        public bool CheckID(string id)
-        {
-            foreach (char c in id)
-            {
-                if (c < '0' || c > '9')
-                    return false;
-            }
-            return true;
-        }
+        
+        
 
 
 
